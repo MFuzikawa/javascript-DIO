@@ -19,7 +19,7 @@ const animal: IDomestico= {
     porte:'medio',
     tipo:'terrestre',
 }
-function liberarRacao(animal:IAnimal| ICaninos) {
+function liberarRacao(animal:IAnimal | ICaninos) {
     if('porte' in animal){
         //dê ração de cachorro
     }
