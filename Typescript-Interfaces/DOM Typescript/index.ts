@@ -1,4 +1,4 @@
-
+/* no typescript é necessario explicitar o que é cada elemento */
 const input = document.getElementById('input') as HTMLInputElement
 
 input.addEventListener('input', (event) =>{
