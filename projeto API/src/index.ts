@@ -7,13 +7,14 @@ import bearerAuthenticationMiddleware from "./middlewares/bearerAuthenticationMi
 const server = express();
 
 server.use(express.json());
-server.use(express.urlencoded({extended: true}))
+server.use(express.urlencoded({extended: true}));
 
 const port = 5000;
 
 //configuração de rota
+server.use(autorizationRoute);
+server.use(bearerAuthenticationMiddleware);
 server.use(usersRoute);
-server.use(bearerAuthenticationMiddleware,autorizationRoute)
 //middlewares de tratamento de erro
 server.use(errorHandler);
 

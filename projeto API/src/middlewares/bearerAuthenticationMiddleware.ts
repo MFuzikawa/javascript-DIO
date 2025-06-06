@@ -16,19 +16,22 @@ async function bearerAuthenticationMiddleware(req: Request, res: Response, next:
         if (authorizationType !== 'bearer' || !token) {
             throw new forbiddenError('Tipo de auth invalida');
         }
+        try {
+            const tokenPayload = JWT.verify(token, 'My_secret_key');
 
-        const tokenPayload = JWT.verify(token, 'My_secret_key');
-
-        if (typeof tokenPayload !== 'object' || !tokenPayload.sub) {
-            throw new forbiddenError("Token invalido");
-        }
-
-        const uuid = tokenPayload.sub;
-
-        const user = {uuid:tokenPayload.sub, username: tokenPayload.username};
-
-        req.user = user;
-        next();
+            if (typeof tokenPayload !== 'object' || !tokenPayload.sub) {
+                throw new forbiddenError("Token invalido");
+            }
+    
+            const uuid = tokenPayload.sub;
+    
+            const user = {uuid:tokenPayload.sub, username: tokenPayload.username};
+    
+            req.user = user;
+            next();
+        } catch (error) {
+            throw new forbiddenError("Token Inválido")
+        } 
     } catch (error) {
         next(error);
     }
