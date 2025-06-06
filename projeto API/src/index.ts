@@ -2,6 +2,7 @@ import express from "express";
 import usersRoute from "./routes/usersRoute";
 import errorHandler from "./middlewares/errorHandlerMiddleware";
 import autorizationRoute from "./routes/authorizationRoute";
+import bearerAuthenticationMiddleware from "./middlewares/bearerAuthenticationMiddleware";
 
 const server = express();
 
@@ -12,7 +13,7 @@ const port = 5000;
 
 //configuração de rota
 server.use(usersRoute);
-server.use(autorizationRoute)
+server.use(bearerAuthenticationMiddleware,autorizationRoute)
 //middlewares de tratamento de erro
 server.use(errorHandler);
 
