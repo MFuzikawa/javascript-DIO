@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from "express"
 import userRepository from "../repositories/userRepository";
 
+
 const usersRoute = Router();
 
 usersRoute.get('/users', async (req: Request, res: Response, next: NextFunction) => {
@@ -9,9 +10,14 @@ usersRoute.get('/users', async (req: Request, res: Response, next: NextFunction)
 })
 
 usersRoute.get('/users/:uuid', async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
-    const uuid = req.params.uuid
-    const user = await userRepository.findById(uuid)
-    res.status(200).json(user);
+    try {
+        const uuid = req.params.uuid
+        const user = await userRepository.findById(uuid)
+        res.status(200).json(user);
+    } catch (error) {
+        next(error);
+    }
+
 })
 
 usersRoute.post('/users', async (req: Request, res: Response, next: NextFunction) => {
